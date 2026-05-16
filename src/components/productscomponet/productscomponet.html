@@ -1,0 +1,41 @@
+
+
+<body>
+
+    <div class="buttones btn-group container d-flex justify-content-center gap-3 mt-3">
+        <button type="button" class="btn btn-success 
+        "(click)="showaddproductform = !showaddproductform">{{showaddproductform ?'cancel':'Add product'}}</button>
+        
+        <button type="button" class="btn btn-secondary">update product</button>
+
+        <button type="button" class="btn btn-danger">Delete product</button>
+    </div>
+
+    <div *ngIf="showaddproductform" class="card mt-3 p-3">
+
+        <form [formGroup]="addform" (ngSubmit)="addproduct()" class="row g-2" mt-3>
+
+            <div class="col-md-6">
+                <input class="form-control" placeholder="Name" formControlName="name" />
+            </div>
+            <div class="col-6">
+                <textarea class="form-control" placeholder="Description" rows="2" formControlName="description"></textarea>
+            </div>
+            <div class="col-md-6">
+                <input class="form-control" placeholder="Price" formControlName="price" />            
+            </div>
+            <div class="col-md-6">
+                <input class="form-control" placeholder="Category" formControlName="categoryId" />
+            </div>
+            
+            <input type="file" class="form-control" placeholder="Image URL" formControlName="imageUrl" (change)="onFileSelected($event)"  />
+
+            <button class="btn btn-info col-1" type="submit" [disabled]="addform.invalid">Create</button>
+
+        </form>
+
+     </div>
+
+
+
+</body>
