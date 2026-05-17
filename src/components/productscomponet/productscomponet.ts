@@ -15,11 +15,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class Productscomponet {
 
-  products:any[]=[];
+  getproducts:any[]=[];
 
   showaddproductform:boolean=false;
+  showupdateproductform:boolean=false;
+  showdeleteproductform:boolean=false;
   selectedImage!: File;
+  
   addform : FormGroup;
+  deleteform : FormGroup;
 
  
 
@@ -33,6 +37,9 @@ export class Productscomponet {
       imageUrl:[null],
       categoryId:['', [Validators.required]]
     })
+    this.deleteform=this.fb.group({
+      name:['', [Validators.required]]
+    })
   }    
 
   onFileSelected(event: any) {
@@ -42,7 +49,7 @@ export class Productscomponet {
   getallproducts(){
     this._producservice.getProducts().subscribe({
       next:(res:any)=>{
-        this.products=res;
+        this.getproducts=res;
       },
       error:(err)=>{
         console.log(err);
@@ -65,14 +72,6 @@ export class Productscomponet {
 
       const Newname = this.addform.value.name.trim().toLowerCase();
 
-      const ExsistName = this.products.some(
-        p => p.name.trim().toLowerCase() === Newname
-      );
-
-      if (ExsistName) {
-        alert('product name already exists');
-        return;
-      }
 
       this._producservice.addproduct(productData).subscribe({
 
@@ -89,7 +88,7 @@ export class Productscomponet {
         },
 
         error: (err) => {
-          console.log(err);
+           alert(err.error);
         }
 
       });
@@ -97,6 +96,44 @@ export class Productscomponet {
     },
 
     error: (err) => {
+       alert("image upload failed");
+    }
+
+  });
+
+}
+
+
+
+deletproduct() {
+
+  const deleteproductname =
+    this.deleteform.value.name?.trim();
+
+  if (!deleteproductname) {
+    return;
+  }
+
+  this._producservice.deleteproduct(deleteproductname).subscribe({
+
+    next: () => {
+
+      this.getproducts = this.getproducts.filter(
+        p => p.name !== deleteproductname
+      );
+
+      this.deleteform.reset();
+
+      alert('product deleted successfully');
+      this.deleteform.reset();
+    },
+
+    error: (err) => {
+
+      if (err.status === 404) {
+        alert('product not found');
+      }
+
       console.log(err);
     }
 
@@ -108,4 +145,6 @@ export class Productscomponet {
 
   }
 
+
+ 
 

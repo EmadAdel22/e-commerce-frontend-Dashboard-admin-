@@ -17,8 +17,8 @@ export class Products {
   updateproduct(id: number, product: ProductData) {
     return this.http.put<ProductData>(`${this.apurlproducts}/${id}`, product);
   }
-  deleteproduct(id: number) {
-    return this.http.delete(`${this.apurlproducts}/${id}`);
+  deleteproduct(name: string) {
+    return this.http.delete(`${this.apurlproducts}/deleteproduct/${name}`);
   }
   
    getProducts() {

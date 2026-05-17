@@ -6,12 +6,17 @@
         <button type="button" class="btn btn-success 
         "(click)="showaddproductform = !showaddproductform">{{showaddproductform ?'cancel':'Add product'}}</button>
         
-        <button type="button" class="btn btn-secondary">update product</button>
+        <button type="button" class="btn btn-secondary"
+        (click)="showupdateproductform = !showupdateproductform">{{showupdateproductform ?'cancel':'Update product'}}</button>
 
-        <button type="button" class="btn btn-danger">Delete product</button>
+        <button type="button" class="btn btn-danger"
+        (click)="showdeleteproductform = !showdeleteproductform">{{showdeleteproductform ?'cancel':'Delete product'}}</button>
     </div>
 
+    <!-- // Add Product Form -->
+
     <div *ngIf="showaddproductform" class="card mt-3 p-3">
+        <h1>Add New Product</h1>
 
         <form [formGroup]="addform" (ngSubmit)="addproduct()" class="row g-2" mt-3>
 
@@ -37,5 +42,24 @@
      </div>
 
 
+     <!-- // Update Product Form -->
 
+
+     <!-- // Delete Product Form -->
+
+         <div *ngIf="showdeleteproductform" class="card mt-3 p-3" >
+
+            <h1>Delete Product</h1>
+
+            <form [formGroup]="deleteform" (ngSubmit)="deletproduct()" class="row g-2" mt-3>
+                    <div class="col-md-6">
+                        <input class="form-control" placeholder="Name" formControlName="name" />
+                    </div>
+
+                  <button class="btn btn-danger col-1" type="submit" [disabled]="deleteform.invalid">Remove</button>
+            </form>
+
+
+
+         </div>
 </body>
