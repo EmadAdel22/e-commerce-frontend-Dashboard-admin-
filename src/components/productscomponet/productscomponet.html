@@ -33,9 +33,9 @@
                 <input class="form-control" placeholder="Category" formControlName="categoryId" />
             </div>
             
-            <input type="file" class="form-control" placeholder="Image URL" formControlName="imageUrl" (change)="onFileSelected($event)"  />
+            <input type="file" class="form-control" placeholder="Image URL"  (change)="onFileSelected($event)"  />
 
-            <button class="btn btn-info col-1" type="submit" [disabled]="addform.invalid">Create</button>
+            <button class="btn btn-success col-1" type="submit" [disabled]="addform.invalid">Create</button>
 
         </form>
 
@@ -43,6 +43,42 @@
 
 
      <!-- // Update Product Form -->
+
+
+<div *ngIf="showupdateproductform" class="card mt-3 p-3">
+        <h1>Update  Product</h1>
+
+        <form [formGroup]="searchForm" class="mb-3">
+            <div class="col-md-6">
+                <input class="form-control" placeholder="Search Name" formControlName="searchName" />
+            </div>  
+            <button class="btn btn-warning mt-2" type="button" (click)="searchProduct()" >Search</button>
+        </form>
+
+        <form [formGroup]="updateform" (ngSubmit)="updateproduct()" class="row g-2  mt-3">
+
+            <div class="col-md-6">
+                <input class="form-control" placeholder="Name" formControlName="name" />
+            </div>
+            <div class="col-6">
+                <textarea class="form-control" placeholder="Description" rows="2" formControlName="description"></textarea>
+            </div>
+            <div class="col-md-6">
+                <input class="form-control" placeholder="Price" formControlName="price" />            
+            </div>
+            <div class="col-md-6">
+                <input class="form-control" placeholder="Category" formControlName="categoryId" />
+            </div>
+            
+            <input type="file" class="form-control" placeholder="Image URL"  (change)="onFileSelected($event)"  />
+
+            <button class="btn btn-secondary col-1" type="submit" [disabled]="updateform.invalid">update</button>
+
+        </form>
+
+<img [src]="'https://localhost:7118/' + currentImageUrl">
+     </div>
+     
 
 
      <!-- // Delete Product Form -->
@@ -62,4 +98,69 @@
 
 
          </div>
+
+         <!-- // Category management buttons -->
+
+ <div class="buttones btn-group container d-flex justify-content-center gap-3 mt-3">
+        <button type="button" class="btn btn-success 
+        "(click)="showaddcategoryform = !showaddcategoryform">{{showaddcategoryform ?'cancel':'Add category'}}</button>
+        
+        <button type="button" class="btn btn-secondary"
+        (click)="showupdatecategoryform = !showupdatecategoryform">{{showupdatecategoryform ?'cancel':'Update category'}}</button>
+
+        <button type="button" class="btn btn-danger"
+        (click)="showdeletecategoryform = !showdeletecategoryform">{{showdeletecategoryform ?'cancel':'Delete category'}}</button>
+    </div>
+
+
+    <!-- // Add Category Form -->
+
+   <div *ngIf="showaddcategoryform" class="card mt-3 p-3" >
+
+            <h1>Add Category</h1>
+
+            <form  class="row g-2 mt-3" >
+                    <div class="col-md-6">
+                        <input class="form-control" placeholder="Category Name" #categoryInput />
+                    </div>
+
+                  <button class="btn btn-success col-1" type="submit " (click)="addedcategory(categoryInput.value)">Add </button>
+            </form>
+
+
+         </div>
+
+         <!-- // Update Category Form -->
+
+         <div *ngIf="showupdatecategoryform" class="card mt-3 p-3" >
+
+            <h1>Update Category</h1>
+
+            <form  class="row g-2" mt-3>
+                    <div class="col-md-6">
+                        <input class="form-control" placeholder="Category Name"  />
+                    </div>
+
+                  <button class="btn btn-secondary col-1" type="submit">Update </button>
+            </form>
+
+
+         </div>
+
+         <!-- // Delete Category Form -->
+          <div *ngIf="showdeletecategoryform" class="card mt-3 p-3" >
+
+            <h1>Delete Category</h1>
+
+            <form  class="row g-2" mt-3>
+                    <div class="col-md-6">
+                        <input class="form-control" placeholder="Category Name"  />
+                    </div>
+
+                  <button class="btn btn-danger col-1" type="submit">Remove </button>
+            </form>
+
+
+         </div>
+
 </body>

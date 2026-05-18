@@ -9,13 +9,13 @@ export class Products {
   private http = inject(HttpClient)
 
   private apurlproducts ='https://localhost:7118/api/productes';
-  private apurlcategories ='https://localhost:7118/api/categories';
+  private apurlcategories ='https://localhost:7118/api/Categories';
 
   addproduct(product: ProductData) {
     return this.http.post<ProductData>(`${this.apurlproducts}/product`, product);
   }
   updateproduct(id: number, product: ProductData) {
-    return this.http.put<ProductData>(`${this.apurlproducts}/${id}`, product);
+    return this.http.put<ProductData>(`${this.apurlproducts}/updateproduct/${id}`, product);
   }
   deleteproduct(name: string) {
     return this.http.delete(`${this.apurlproducts}/deleteproduct/${name}`);
@@ -38,19 +38,22 @@ export class Products {
   // categoreis
 
   getcategories() {
-    return this.http.get<string[]>(this.apurlcategories);
+    return this.http.get<string[]>(`${this.apurlcategories}/allCategories`);
+  }
+
+  
+  addcategory(category:any) {
+    return this.http.post(`${this.apurlcategories}/postcategory`, { name: category });
   }
 
   updatecategories(id :number,categories: string) {
-    return this.http.put(`${this.apurlcategories}/${id}`, categories);
+    return this.http.put(`${this.apurlcategories}/updatecategory/${id}`, categories);
   }
 
-  addcategory(category:any) {
-    return this.http.post(this.apurlcategories, { name: category });
-  }
+ 
 
-  deletecategory(id: number) {
-    return this.http.delete(`${this.apurlcategories}/${id}`);
+  deletecategory(name: string) {
+    return this.http.delete(`${this.apurlcategories}/deletcategory/${name}`);
   }
 
   
