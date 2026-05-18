@@ -18,6 +18,7 @@ export class Productscomponet {
    getproducts:any[]=[];
    categories:any[]=[];
    selectedProductId!: number;
+   slectedcategoryId! : number;
 
   showaddproductform:boolean=false;
   showupdateproductform:boolean=false;
@@ -32,6 +33,8 @@ currentImageUrl:string = '';
   deleteform : FormGroup;
   updateform : FormGroup;
   searchForm : FormGroup;
+  searchCategoryForm : FormGroup;
+  updateCategoryForm : FormGroup;
 
 
 
@@ -49,8 +52,9 @@ currentImageUrl:string = '';
   searchName: ['']
 });
 
-
-
+    this.searchCategoryForm = this.fb.group({
+  searchName: ['']
+});
 
     this.updateform=this.fb.group({
       
@@ -64,10 +68,15 @@ currentImageUrl:string = '';
     this.deleteform=this.fb.group({
       name:['', [Validators.required]]
     })
+
+    this.updateCategoryForm = this.fb.group({
+      name : ['', Validators.required]
+    })
   }
 
   ngOnInit(){
   this.getallproducts();
+  this.getcategories();
 }
 
   onFileSelected(event: any) {
@@ -300,6 +309,61 @@ addedcategory(category: string) {
   
 
 }
+
+// search category
+
+searchCategory(){
+
+  const cateorysearchName = this.searchCategoryForm.value.searchName.trim().toLowerCase();
+
+  const categoryupdated = this.categories.find(p => p.name.trim().toLowerCase() === cateorysearchName )
+
+  if(!categoryupdated)
+  {
+    alert("category not found");
+      console.log(this.categories);
+console.log(cateorysearchName);
+    return;
+  }
+
+  this.slectedcategoryId = categoryupdated.id;
+
+this.updateCategoryForm.patchValue({
+  name : categoryupdated.name
+
+});
+
+
+}
+
+// update categorty
+
+updatecaategory(){
+
+  if (this.updateCategoryForm.invalid) return;
+
+   
+
+this._producservice.updateproduct(this.slectedcategoryId,  this.updateCategoryForm.value).subscribe({
+
+  next: () => {
+
+    alert('category updated successfully');
+
+    this.updateCategoryForm.reset();
+
+  },
+
+  error: (err) => {
+
+  console.log(err);
+  console.log(err.error);
+  }   });
+
+
+
+}
+
 
 // delete category 
 

@@ -136,12 +136,19 @@
 
             <h1>Update Category</h1>
 
-            <form  class="row g-2" mt-3>
+             <form [formGroup]="searchCategoryForm" class="mb-3">
                     <div class="col-md-6">
-                        <input class="form-control" placeholder="Category Name"  />
+                        <input class="form-control" placeholder="Search Name" formControlName="searchName" />
+                    </div>  
+            <button class="btn btn-warning mt-2" type="button" (click)="searchCategory()" >Search</button>
+        </form>
+
+            <form [formGroup]="updateCategoryForm" (ngSubmit)="updatecaategory()"  class="row g-2" mt-3>
+                    <div class="col-md-6">
+                        <input class="form-control" placeholder="Category Name" formControlName="name"  />
                     </div>
 
-                  <button class="btn btn-secondary col-1" type="submit">Update </button>
+                  <button class="btn btn-secondary col-1" type="submit" [disabled]="updateCategoryForm.invalid">Update </button>
             </form>
 
 
