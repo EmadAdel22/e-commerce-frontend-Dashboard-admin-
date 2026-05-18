@@ -154,10 +154,10 @@
 
             <form  class="row g-2" mt-3>
                     <div class="col-md-6">
-                        <input class="form-control" placeholder="Category Name"  />
+                        <input class="form-control" placeholder="Category Name" #catinput />
                     </div>
 
-                  <button class="btn btn-danger col-1" type="submit">Remove </button>
+                  <button class="btn btn-danger col-1" type="submit" (click)="deletCategory(catinput.value)">Remove </button>
             </form>
 
 

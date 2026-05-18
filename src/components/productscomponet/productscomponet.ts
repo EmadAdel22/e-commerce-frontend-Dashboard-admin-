@@ -297,9 +297,49 @@ addedcategory(category: string) {
 
   });
 
+  
+
 }
 
+// delete category 
+
+deletCategory(deletdCategory : string){
+
+  const catName = deletdCategory.trim()
+
+  if(!catName){
+    alert("category name requierd");
+    return;
   }
+
+  this._producservice.deletecategory(catName).subscribe({
+    next :() =>{
+
+      this.categories = this.categories.filter(p => p.name !==catName )
+
+            alert('category deleted successfully');
+
+    
+    },error: (err) => {
+
+      if (err.status === 404) {
+        alert('product not found');
+      }
+
+      console.log(err);
+    }
+
+  });
+
+
+}
+
+
+
+
+
+
+}
 
 
 
